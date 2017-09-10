@@ -1,0 +1,38 @@
+name: ubooquity
+version: '2.1.0'
+summary: Ubooquity is a free home server for your comics and ebooks library
+description: |
+  Ubooquity supports many types of files, with a preference for ePUB, CBZ, CBR
+  and PDF files. Metadata from library management software Calibre and ComicRack
+  are also supported.
+
+grade: stable
+confinement: classic
+
+apps:
+  ubooquity:
+    command: launch_ubooquity
+    plugs:
+      - network
+      - network-bind
+
+icon: ./icon.png
+
+parts:
+  scripts:
+    plugin: dump
+    source: snap/scripts
+  ubooquity:
+    plugin: dump
+    source: http://vaemendis.net/ubooquity/downloads/Ubooquity-2.1.0.zip
+    source-type: zip
+    stage-packages:
+      - libxrender1
+      - libxext6
+      - libxtst6
+      - libxi6
+  oraclejava:
+    plugin: copy
+    source: ./jre-8u144-linux-x64.tar.gz
+    files:
+      '*': ./usr/lib/jvm/
